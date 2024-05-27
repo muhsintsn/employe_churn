@@ -45,10 +45,7 @@ time_spend_company = st.sidebar.number_input("time_spend_company", min_value =2.
 
 model_name=st.selectbox('Select your ML model',('Xgboost','RanFor','KNN','GradBoost'))
 if model_name=='Xgboost':
-  
-    with open("XGBClassifier.pkl", "rb") as f:
-        loaded_data = joblib.load(f)
-    model=loaded_data
+    model=joblib.load(open("XGBClassifier.pkl","rb"))
     st.success('You selected {} model'.format(model_name))
     
 elif model_name=='KNN':
