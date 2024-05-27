@@ -1,6 +1,10 @@
 import streamlit as st
-import pickle
 import pandas as pd
+import joblib
+
+
+
+
 
 
 st.sidebar.title('Employee Churn Analysis')
@@ -41,21 +45,23 @@ time_spend_company = st.sidebar.number_input("time_spend_company", min_value =2.
 
 model_name=st.selectbox('Select your ML model',('Xgboost','RanFor','KNN','GradBoost'))
 if model_name=='Xgboost':
+  
     with open("XGBClassifier.pkl", "rb") as f:
-        loaded_data = pickle.load(f)
+        loaded_data = joblib.load(f)
     model=loaded_data
     st.success('You selected {} model'.format(model_name))
     
 elif model_name=='KNN':
-    model=pickle.load(open("KNeighborsClassifier.pkl","rb"))
+      
+    model=joblib.load(open("KNeighborsClassifier.pkl","rb"))
     st.success('You selected {} model'.format(model_name))
     
 elif model_name=='GradBoost':
-    model=pickle.load(open("GradientBoostingClassifier.pkl","rb"))
+    model=joblib.load(open("GradientBoostingClassifier.pkl","rb"))
     st.success('You selected {} model'.format(model_name))
     
 elif model_name=='RanFor':
-    model=pickle.load(open("RandomForestClassifier.pkl","rb"))
+    model=joblib.load(open("RandomForestClassifier.pkl","rb"))
     st.success('You selected {} model'.format(model_name))
 
 my_dict={
@@ -70,7 +76,7 @@ my_dict={
 
 df = pd.DataFrame.from_dict([my_dict])
 
-columns=pickle.load(open('my_columns.pkl','rb'))
+columns=joblib.load(open('my_columns.pkl','rb'))
 
 df=pd.get_dummies(df).reindex(columns=columns, fill_value=0)
 
@@ -80,7 +86,7 @@ predict = st.sidebar.button("P R E D I C T")
 
 if predict:
     if model_name=='RanFor':
-        scaler=pickle.load(open('my_scaler_knn.pkl','rb'))
+        scaler=joblib.load(open('my_scaler_knn.pkl','rb'))
         df=scaler.transform(df)
         prediction=model.predict(df)
     else:
