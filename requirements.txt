@@ -2,6 +2,5 @@ numpy
 pandas
 streamlit
 scikit-learn
-python
 pickle
 jablib
